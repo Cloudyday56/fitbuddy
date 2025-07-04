@@ -125,6 +125,7 @@ const GenerateProgramPage = () => {
             user_id: user?.id,
           },
         });
+        console.log(user?.id, "User ID passed to VAPI");
 
         // If we reach here, the call started successfully
         // In case the 'call-start' event doesn't fire immediately
@@ -262,7 +263,7 @@ const GenerateProgramPage = () => {
               <div
                 className={`mt-4 flex items-center gap-2 px-3 py-1 rounded-full bg-card border`}
               >
-                <div className={`w-2 h-2 rounded-full bg-muted`} />
+                <div className={`w-2 h-2 rounded-full ${callActive ? "bg-primary animate-pulse" : "bg-muted"}`} />
                 <span className="text-xs text-muted-foreground">Ready</span>
               </div>
             </div>

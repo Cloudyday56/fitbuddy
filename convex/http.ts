@@ -136,6 +136,8 @@ http.route({
         dietary_restrictions,
       } = payload;
 
+      console.log("Received payload:", payload); // Log the received payload
+
       //GEMINI to generate a fitness program and diet plan
       const model = genAI.getGenerativeModel({
         model: "gemini-2.0-flash-001", //gemini model
@@ -146,7 +148,7 @@ http.route({
         },
       });
 
-      // the prompt for Gemini to generate the workout plan
+      // the prompt for Gemini to generate the WORKOUT plan
       const workoutPrompt = `You are an experienced fitness coach creating a personalized workout plan based on:
       Age: ${age}
       Height: ${height}
@@ -190,20 +192,92 @@ http.route({
 
       DO NOT add any fields that are not in this example. Your response must be a valid JSON object with no additional text.`;
 
-
       const workoutResult = await model.generateContent(workoutPrompt); //Gemini result (1)
       const workoutPlanText = workoutResult.response.text(); // get text (2)
 
       let workoutPlan = JSON.parse(workoutPlanText); // Parse the text (3)
       workoutPlan = validateWorkoutPlan(workoutPlan); // then validate the plan (4)
 
+
+      // the prompt for DIET plan
+      const dietPrompt = `You are an experienced nutrition coach creating a personalized diet plan based on:
+        Age: ${age}
+        Height: ${height}
+        Weight: ${weight}
+        Fitness goal: ${fitness_goal}
+        Dietary restrictions: ${dietary_restrictions}
+        
+        As a professional nutrition coach:
+        - Calculate appropriate daily calorie intake based on the person's stats and goals
+        - Create a balanced meal plan with proper macronutrient distribution
+        - Include a variety of nutrient-dense foods while respecting dietary restrictions
+        - Consider meal timing around workouts for optimal performance and recovery
+        
+        CRITICAL SCHEMA INSTRUCTIONS:
+        - Your output MUST contain ONLY the fields specified below, NO ADDITIONAL FIELDS
+        - "dailyCalories" MUST be a NUMBER, not a string
+        - DO NOT add fields like "supplements", "macros", "notes", or ANYTHING else
+        - ONLY include the EXACT fields shown in the example below
+        - Each meal should include ONLY a "name" and "foods" array
+
+        Return a JSON object with this EXACT structure and no other fields:
+        {
+          "dailyCalories": 2000,
+          "meals": [
+            {
+              "name": "Breakfast",
+              "foods": ["Oatmeal with berries", "Greek yogurt", "Black coffee"]
+            },
+            {
+              "name": "Lunch",
+              "foods": ["Grilled chicken salad", "Whole grain bread", "Water"]
+            }
+          ]
+        }
+        
+        DO NOT add any fields that are not in this example. Your response must be a valid JSON object with no additional text.`;
+
+      const dietResult = await model.generateContent(dietPrompt); //Gemini result (1)
+      const dietPlanText = dietResult.response.text(); // get text (2)
+
+      let dietPlan = JSON.parse(dietPlanText); // Parse the text (3)
+      dietPlan = validateDietPlan(dietPlan); // then validate the plan (4)
+
       // * Save to database: Convex
+      const planId = await ctx.runMutation(api.plans.createPlan, { // run the createPlan mutation
+        userId: user_id, //from payload from Vapi
+        dietPlan,
+        isActive: true,
+        workoutPlan,
+        name: `${fitness_goal} Plan - ${new Date().toLocaleDateString()}`, // name the plan with goal and date
+      });
 
-
-
+      // Return the plan ID as a response
+      return new Response(
+        JSON.stringify({
+          success: true,
+          data: {
+            planId,
+            workoutPlan,
+            dietPlan,
+          }
+        }),
+        {
+        status: 200,
+        headers: {"Content-Type": "application/json",},
+      });
 
     } catch (error) {
       console.log("Error in creating plan:", error);
+      return new Response(
+        JSON.stringify({
+          success: false,
+          error: error instanceof Error ? error.message : String(error),
+        }),
+        {
+        status: 500,
+        headers: {"Content-Type": "application/json",},
+      });
     }
   }),
 });
