@@ -11,7 +11,7 @@ const GenerateProgramPage = () => {
   const [callActive, setCallActive] = useState(false); //check the call
   const [connecting, setConnecting] = useState(false); //check connecting
   const [isSpeaking, setIsSpeaking] = useState(false); //for is AI speaking
-  const [messages, setMessages] = useState([]); //for displaying what user and AI say
+  const [messages, setMessages] = useState<any[]>([]); //for displaying what user and AI say
   const [callEnded, setCallEnded] = useState(false); //check if call ended
 
   const { user } = useUser(); //get user data
@@ -44,8 +44,8 @@ const GenerateProgramPage = () => {
     //at start
     const handleCallStart = () => {
       console.log("Call started");
+      setConnecting(false);
       setCallActive(true);
-      setConnecting(true);
       setCallEnded(false);
     };
     //at end
@@ -67,9 +67,14 @@ const GenerateProgramPage = () => {
       setIsSpeaking(false);
     };
     //script
-    const handleMessage = (message: string) => {};
+    const handleMessage = (message: any) => {
+      if (message.type === "transcript" && message.transcriptType === "final") { //update the UI only when the transcript is ready (final)
+        const newMessage = { content: message.transcript, role: message.role };
+        setMessages((prev) => [...prev, newMessage]);
+      }
+    };
     //error
-    const handleError = (error: Error) => {
+    const handleError = (error: any) => {
       console.error("Error in VAPI:", error);
       setConnecting(false);
       setCallActive(false);
@@ -98,9 +103,13 @@ const GenerateProgramPage = () => {
 
   //call button toggle
   const toggleCall = async () => {
-    if (callActive)
-      vapi.stop(); //show the stop button if call is active
-    else {
+    if (callActive) {
+      try {
+        await vapi.stop(); //show the stop button if call is active
+      } catch (error) {
+        console.log("Error stopping call:", error);
+      }
+    } else {
       //show the start button if call is not active
       try {
         setConnecting(true); //connecting to vapi
@@ -108,15 +117,25 @@ const GenerateProgramPage = () => {
         setCallEnded(false); //reset call ended state
 
         //start the call with vapi
-        const fullName = user?.firstName
-          ? `${user.firstName} ${user.lastName || ""}`.trim()
-          : "There"; //get full name from user data
-        await vapi.start("552203fc-117d-44a9-814a-2dde42494ddc", {
+        const fullName = user?.firstName ? `${user.firstName} ${user.lastName}`.trim() : "There"; //get full name from user data
+        const justFirstName = user?.firstName ? `${user.firstName}`.trim() : "There"; //get first name from user data
+        await vapi.start(process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID, {
           variableValues: {
-            full_name: fullName, //the variable setup in vapi workflow
-            // todo: send user id
+            full_name: justFirstName, //the variable setup in vapi workflow
+            user_id: user?.id,
           },
         });
+        console.log(user?.id, "User ID passed to VAPI");
+
+        // If we reach here, the call started successfully
+        // In case the 'call-start' event doesn't fire immediately
+        setTimeout(() => {
+          if (connecting) {
+            console.log("Manually setting call as active after timeout");
+            setCallActive(true);
+            setConnecting(false);
+          }
+        }, 3000); // 3 second timeout
       } catch (error) {
         console.log("Error starting call:", error);
         setConnecting(false);
@@ -244,14 +263,41 @@ const GenerateProgramPage = () => {
               <div
                 className={`mt-4 flex items-center gap-2 px-3 py-1 rounded-full bg-card border`}
               >
-                <div className={`w-2 h-2 rounded-full bg-muted`} />
+                <div className={`w-2 h-2 rounded-full ${callActive ? "bg-primary animate-pulse" : "bg-muted"}`} />
                 <span className="text-xs text-muted-foreground">Ready</span>
               </div>
             </div>
           </Card>
-
-          {/* TODO: Message cointer */}
         </div>
+
+        {/* Message container */}
+        {messages.length > 0 && (
+          <div ref={messageContainerRef}
+            className="w-full bg-card/90 backdrop-blur-sm border border-border rounded-xl p-4 mb-8 h-64 overflow-y-auto transition-all duration-300 scroll-smooth"
+          >
+            <div className="space-y-3">
+              {/* during call */}
+              {messages.map((msg, index) => (
+                <div key={index} className="message-item animate-fadeIn">
+                  <div className="font-semibold text-xs text-muted-foreground mb-1">
+                    {msg.role === "assistant" ? "FitBuddy AI" : "You"}:
+                  </div>
+                  <p className="text-foreground">{msg.content}</p>
+                </div>
+              ))}
+
+              {/* call end */}
+              {callEnded && (
+                <div className="message-item animate-fadeIn">
+                  <div className="font-semibold text-xs text-primary mb-1">System:</div>
+                  <p className="text-foreground">
+                    Your fitness program has been created! Redirecting to your profile...
+                  </p>
+                </div>
+              )}
+            </div>
+          </div>
+        )}
 
         {/* Call controls (start call button) */}
         <div className="w-full flex justify-center gap-4">
@@ -267,7 +313,7 @@ const GenerateProgramPage = () => {
             disabled={connecting || callEnded} // disable when not active
           >
             {connecting && (
-              <span className="absolute inset-0 rounded-full animate-ping bg-primary/20 opacity-50"></span>
+              <span className="absolute inset-0 rounded-full animate-ping bg-primary/50 opacity-75"></span>
             )}
 
             <span>
@@ -287,4 +333,3 @@ const GenerateProgramPage = () => {
 };
 
 export default GenerateProgramPage;
-

@@ -76,7 +76,7 @@ const HomePage = () => {
                   >
                     {" "}
                     {/* go to generate program */}
-                    Build Your Program Now
+                    Build Your Program
                     <ArrowRightIcon className="ml-2 size-5" />
                   </Link>
                 </Button>

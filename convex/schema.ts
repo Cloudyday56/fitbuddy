@@ -12,7 +12,7 @@ export default defineSchema({
 
   // Define the schema for the plans table
   plans: defineTable({
-    userId: v.id("users"),
+    userId: v.string(),
     name: v.string(),
     workoutPlan: v.object({
       schedule: v.array(v.string()), // e.g., ["Monday", "Wednesday", "Friday"]
