@@ -19,7 +19,6 @@ const GenerateProgramPage = () => {
 
   const messageContainerRef = useRef<HTMLDivElement>(null); //to scroll the msgs
 
-
   // SOLUTION to get rid of "Meeting has ended" error
   useEffect(() => {
     const originalError = console.error;
@@ -27,9 +26,12 @@ const GenerateProgramPage = () => {
     console.error = function (msg, ...args) {
       // check for "Meeting has ended" error
       if (
-        msg &&
-        (msg.includes("Meeting has ended") ||
-          (args[0] && args[0].toString().includes("Meeting has ended")))
+        (typeof msg === "string" && msg.includes("Meeting has ended")) ||
+        (args[0] &&
+          typeof args[0].toString() === "function" &&
+          args[0].toString().includes("Meeting has ended")) ||
+        (msg && msg.errorMsg === "Meeting has ended") ||
+        (msg && msg.error && msg.error.msg === "Meeting has ended")
       ) {
         console.log("Ignoring known error: Meeting has ended");
         return; // don't pass to original handler
@@ -37,10 +39,11 @@ const GenerateProgramPage = () => {
 
       // Check for empty VAPI error object
       if (
-        msg && msg.includes("Error in VAPI: {}") ||
-        (args[0] && args[0].toString() === "{}")
+        (typeof msg === "string" && msg.includes("Error in VAPI")) ||
+        (msg && msg.action === "error") ||
+        (msg && typeof msg === "object" && Object.keys(msg).length === 0)
       ) {
-        console.log("Ignoring empty VAPI error");
+        console.log("Ignoring VAPI error:", msg);
         return; // don't pass to original handler
       }
 
@@ -53,7 +56,6 @@ const GenerateProgramPage = () => {
       console.error = originalError;
     };
   }, []);
-
 
   //scroll to the bottom of the message container
   useEffect(() => {
@@ -104,8 +106,28 @@ const GenerateProgramPage = () => {
     };
     //script
     const handleMessage = (message: any) => {
-      if (message.type === "transcript" && message.transcriptType === "final") { //update the UI only when the transcript is ready (final)
-        const newMessage = { content: message.transcript, role: message.role };
+      if (message.type === "transcript" && message.transcriptType === "final") {
+        //update the UI only when the transcript is ready (final)
+        let transcriptContent = message.transcript;
+
+        // Get the current user firstName rather than the one from initial render
+        const currentFirstName = user?.firstName;
+
+        // Fix the AI greeting by replacing any misspelled name with the correct one
+        if (message.role === "assistant" && currentFirstName) {
+          // Check for various greeting patterns and replace the name
+          // This covers: "Hello [Name]", "Hi [Name]", "Hey [Name]", "Hello, [Name]", etc.
+          if (
+            transcriptContent.match(/^(Hello|Hi|Hey)(\s+|,\s*)([A-Za-z]+)/i)
+          ) {
+            transcriptContent = transcriptContent.replace(
+              /^(Hello|Hi|Hey)(\s+|,\s*)([A-Za-z]+)/i,
+              `$1$2${currentFirstName}`
+            );
+          }
+        }
+
+        const newMessage = { content: transcriptContent, role: message.role };
         setMessages((prev) => [...prev, newMessage]);
       }
     };
@@ -135,7 +157,7 @@ const GenerateProgramPage = () => {
         .off("message", handleMessage)
         .off("error", handleError);
     };
-  }, []);
+  }, [user]); // Add user as a dependency so the effect reruns when user changes
 
   //call button toggle
   const toggleCall = async () => {
@@ -153,8 +175,12 @@ const GenerateProgramPage = () => {
         setCallEnded(false); //reset call ended state
 
         //start the call with vapi
-        const fullName = user?.firstName ? `${user.firstName} ${user.lastName}`.trim() : "There"; //get full name from user data
-        const justFirstName = user?.firstName ? `${user.firstName}`.trim() : "There"; //get first name from user data
+        const fullName = user?.firstName
+          ? `${user.firstName} ${user.lastName}`.trim()
+          : "There"; //get full name from user data
+        const justFirstName = user?.firstName
+          ? `${user.firstName}`.trim()
+          : "There"; //get first name from user data
         await vapi.start(process.env.NEXT_PUBLIC_VAPI_WORKFLOW_ID, {
           variableValues: {
             full_name: justFirstName, //the variable setup in vapi workflow
@@ -256,8 +282,11 @@ const GenerateProgramPage = () => {
               >
                 <div
                   className={`w-2 h-2 rounded-full ${
-                    isSpeaking ? "bg-primary animate-pulse" : "bg-muted"
+                    isSpeaking ? "animate-pulse" : ""
                   }`}
+                  style={{
+                    backgroundColor: isSpeaking ? "#00ccff" : "#666666",
+                  }}
                 />
 
                 <span className="text-xs text-muted-foreground">
@@ -299,7 +328,12 @@ const GenerateProgramPage = () => {
               <div
                 className={`mt-4 flex items-center gap-2 px-3 py-1 rounded-full bg-card border`}
               >
-                <div className={`w-2 h-2 rounded-full ${callActive ? "bg-primary animate-pulse" : "bg-muted"}`} />
+                <div
+                  className={`w-2 h-2 rounded-full ${callActive ? "animate-pulse" : ""}`}
+                  style={{
+                    backgroundColor: callActive ? "#00ccff" : "#666666",
+                  }}
+                />
                 <span className="text-xs text-muted-foreground">Ready</span>
               </div>
             </div>
@@ -308,7 +342,8 @@ const GenerateProgramPage = () => {
 
         {/* Message container */}
         {messages.length > 0 && (
-          <div ref={messageContainerRef}
+          <div
+            ref={messageContainerRef}
             className="w-full bg-card/90 backdrop-blur-sm border border-border rounded-xl p-4 mb-8 h-64 overflow-y-auto transition-all duration-300 scroll-smooth"
           >
             <div className="space-y-3">
@@ -325,9 +360,15 @@ const GenerateProgramPage = () => {
               {/* call end */}
               {callEnded && (
                 <div className="message-item animate-fadeIn">
-                  <div className="font-semibold text-xs text-primary mb-1">System:</div>
+                  <div
+                    className="font-semibold text-xs mb-1"
+                    style={{ color: "#00ccff" }}
+                  >
+                    System:
+                  </div>
                   <p className="text-foreground">
-                    Your fitness program has been created! Redirecting to your profile...
+                    Your fitness program has been created! Redirecting to your
+                    profile...
                   </p>
                 </div>
               )}
@@ -342,9 +383,10 @@ const GenerateProgramPage = () => {
               callActive
                 ? "bg-destructive hover:bg-destructive/90"
                 : callEnded
-                  ? "bg-green-600 hover:bg-green-700"
+                  ? "hover:bg-[#00ccff]/90"
                   : "bg-primary hover:bg-primary/90"
             } text-white relative`}
+            style={callEnded ? { backgroundColor: "#00ccff" } : {}}
             onClick={toggleCall} // toggle call on click
             disabled={connecting || callEnded} // disable when not active
           >

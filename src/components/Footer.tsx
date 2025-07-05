@@ -68,7 +68,10 @@ const Footer = () => {
 
           {/* Status */}
           <div className="flex items-center gap-2 px-3 py-2 border border-border rounded-md bg-background/50">
-            <div className="w-2 h-2 rounded-full bg-green-500"></div>
+            <div
+              className="w-2 h-2 rounded-full"
+              style={{ backgroundColor: "#00ccff" }}
+            ></div>
             <span className="text-xs font-mono">SYSTEM OPERATIONAL</span>
           </div>
         </div>
