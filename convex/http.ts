@@ -52,6 +52,7 @@ http.route({
 
     const eventType = evt.type; // Get the event type from the webhook event
 
+    // handle User.created event (to create user in Convex)
     if (eventType == "user.created") {
       //if so, extract user data
       const { id, first_name, last_name, image_url, email_addresses } =
@@ -76,7 +77,27 @@ http.route({
       }
     }
 
-    // todo: handle user.updated later
+    // handle User.updated event (to store updated user data in Convex)
+    if (eventType == "user.updated") {
+      //check for all changes
+      const { id, email_addresses, first_name, last_name, image_url } = evt.data;
+
+      const email = email_addresses[0].email_address;
+      const name = `${first_name || ""} ${last_name || ""}`.trim();
+
+      try {
+        await ctx.runMutation(api.users.updateUser, { //another mutation in users.ts
+          clerkId: id,
+          email,
+          name,
+          image: image_url,
+        });
+      } catch (error) {
+        console.log("Error updating user:", error);
+        return new Response("Error updating user", { status: 500 });
+      }
+    }
+
 
     return new Response("Webhook processed successfully", {
       status: 200,

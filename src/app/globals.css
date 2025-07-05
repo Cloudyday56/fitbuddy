@@ -25,6 +25,7 @@
   --color-input: var(--input);
   --color-border: var(--border);
   --color-destructive: var(--destructive);
+  --color-success: var(--success);
   --color-accent-foreground: var(--accent-foreground);
   --color-accent: var(--accent);
   --color-muted-foreground: var(--muted-foreground);
@@ -47,73 +48,74 @@
   /* Base Variables */
   --radius: 0.625rem;
 
-  /* Cyberpunk Theme Colors */
+  /* Yellow-Orange Theme Colors */
   --cyber-black: #000000;
-  --cyber-dark: #0a0c14;
-  --cyber-blue-bright: #18cef2;
-  --cyber-blue: #1089bd;
-  --cyber-blue-dark: #0b4a7d;
-  --cyber-blue-glow: #38bdf8;
-  --cyber-accent: #0ff4;
+  --cyber-dark: #2e1a0a;
+  --cyber-yellow-bright: #ffcc00;
+  --cyber-yellow: #ff9900;
+  --cyber-yellow-dark: #cc6600;
+  --cyber-yellow-glow: #ffaa33;
+  --cyber-accent: #ff6600;
 
   /* Background */
   --background: var(--cyber-dark);
   --foreground: #f2f2f2;
 
   /* Card and popover elements */
-  --card: #111827;
+  --card: #3d2812;
   --card-foreground: #f2f2f2;
-  --popover: #111827;
+  --popover: #3d2812;
   --popover-foreground: #f2f2f2;
 
-  /* Primary - Main blue */
-  --primary: var(--cyber-blue-bright);
+  /* Primary - Main yellow */
+  --primary: var(--cyber-yellow-bright);
   --primary-foreground: var(--cyber-dark);
 
-  /* Secondary - Darker blue */
-  --secondary: var(--cyber-blue);
+  /* Secondary - Darker yellow-orange */
+  --secondary: var(--cyber-yellow);
   --secondary-foreground: #ffffff;
 
-  /* Accent - Light blue with glow */
-  --accent: var(--cyber-blue-glow);
+  /* Accent - Light yellow-orange with glow */
+  --accent: var(--cyber-yellow-glow);
   --accent-foreground: var(--cyber-dark);
 
   /* Muted elements */
-  --muted: #1e293b;
-  --muted-foreground: #94a3b8;
+  --muted: #4e350e;
+  --muted-foreground: #ffedb3;
 
   /* System colors */
   --destructive: #ef4444;
-  --border: rgba(24, 206, 242, 0.2);
-  --input: rgba(24, 206, 242, 0.2);
-  --ring: var(--cyber-blue);
+  --success: #00ccff; /* Light blue for active/online status */
+  --border: rgba(255, 204, 0, 0.3);
+  --input: rgba(255, 204, 0, 0.3);
+  --ring: var(--cyber-yellow);
 
-  /* Chart colors - cyberpunk theme */
-  --chart-1: var(--cyber-blue-bright);
-  --chart-2: #3b82f6;
-  --chart-3: var(--cyber-blue);
-  --chart-4: #06b6d4;
-  --chart-5: #0284c7;
+  /* Chart colors - yellow theme */
+  --chart-1: var(--cyber-yellow-bright);
+  --chart-2: #ffaa33;
+  --chart-3: var(--cyber-yellow);
+  --chart-4: #ff8800;
+  --chart-5: #ff6600;
 
   /* Sidebar colors */
-  --sidebar: var(--cyber-dark);
+  --sidebar: #351f0e;
   --sidebar-foreground: #f2f2f2;
-  --sidebar-primary: var(--cyber-blue-bright);
+  --sidebar-primary: var(--cyber-yellow-bright);
   --sidebar-primary-foreground: var(--cyber-dark);
-  --sidebar-accent: var(--cyber-blue);
+  --sidebar-accent: var(--cyber-yellow);
   --sidebar-accent-foreground: #ffffff;
-  --sidebar-border: rgba(24, 206, 242, 0.2);
-  --sidebar-ring: var(--cyber-blue);
+  --sidebar-border: rgba(255, 204, 0, 0.3);
+  --sidebar-ring: var(--cyber-yellow);
 
-  /* Custom Cyberpunk UI Variables */
-  --cyber-grid-color: rgba(24, 206, 242, 0.05);
-  --cyber-glow-primary: rgba(24, 206, 242, 0.2);
-  --cyber-glow-strong: rgba(24, 206, 242, 0.5);
-  --cyber-line-color: rgba(24, 206, 242, 0.3);
-  --cyber-terminal-bg: rgba(0, 0, 0, 0.7);
+  /* Custom Yellow UI Variables */
+  --cyber-grid-color: rgba(255, 204, 0, 0.1);
+  --cyber-glow-primary: rgba(255, 204, 0, 0.3);
+  --cyber-glow-strong: rgba(255, 204, 0, 0.6);
+  --cyber-line-color: rgba(255, 204, 0, 0.4);
+  --cyber-terminal-bg: rgba(46, 26, 10, 0.9);
   --cyber-text-bright: #ffffff;
-  --cyber-text-muted: rgba(242, 242, 242, 0.7);
-  --cyber-text-dim: rgba(242, 242, 242, 0.5);
+  --cyber-text-muted: rgba(255, 238, 187, 0.8);
+  --cyber-text-dim: rgba(255, 238, 187, 0.6);
 }
 
 .dark {
@@ -122,57 +124,81 @@
   --foreground: #f2f2f2;
 
   /* Card and popover elements */
-  --card: #111827;
+  --card: #3d2812;
   --card-foreground: #f2f2f2;
-  --popover: #111827;
+  --popover: #3d2812;
   --popover-foreground: #f2f2f2;
 
-  /* Primary - Main blue */
-  --primary: var(--cyber-blue-bright);
+  /* Primary - Main yellow */
+  --primary: var(--cyber-yellow-bright);
   --primary-foreground: var(--cyber-dark);
 
-  /* Secondary - Darker blue */
-  --secondary: var(--cyber-blue);
+  /* Secondary - Darker yellow-orange */
+  --secondary: var(--cyber-yellow);
   --secondary-foreground: #ffffff;
 
-  /* Accent - Light blue with glow */
-  --accent: var(--cyber-blue-glow);
+  /* Accent - Light yellow-orange with glow */
+  --accent: var(--cyber-yellow-glow);
   --accent-foreground: var(--cyber-dark);
 
   /* Muted elements */
-  --muted: #1e293b;
-  --muted-foreground: #94a3b8;
+  --muted: #4e350e;
+  --muted-foreground: #ffedb3;
 
   /* System colors */
   --destructive: #ef4444;
-  --border: rgba(24, 206, 242, 0.2);
-  --input: rgba(24, 206, 242, 0.2);
-  --ring: var(--cyber-blue);
+  --success: #00ccff; /* Light blue for active/online status */
+  --border: rgba(255, 204, 0, 0.3);
+  --input: rgba(255, 204, 0, 0.3);
+  --ring: var(--cyber-yellow);
 
-  /* Chart colors - cyberpunk theme */
-  --chart-1: var(--cyber-blue-bright);
-  --chart-2: #3b82f6;
-  --chart-3: var(--cyber-blue);
-  --chart-4: #06b6d4;
-  --chart-5: #0284c7;
+  /* Chart colors - yellow theme */
+  --chart-1: var(--cyber-yellow-bright);
+  --chart-2: #ffaa33;
+  --chart-3: var(--cyber-yellow);
+  --chart-4: #ff8800;
+  --chart-5: #ff6600;
 
   /* Sidebar colors */
-  --sidebar: var(--cyber-dark);
+  --sidebar: #351f0e;
   --sidebar-foreground: #f2f2f2;
-  --sidebar-primary: var(--cyber-blue-bright);
+  --sidebar-primary: var(--cyber-yellow-bright);
   --sidebar-primary-foreground: var(--cyber-dark);
-  --sidebar-accent: var(--cyber-blue);
+  --sidebar-accent: var(--cyber-yellow);
   --sidebar-accent-foreground: #ffffff;
-  --sidebar-border: rgba(24, 206, 242, 0.2);
-  --sidebar-ring: var(--cyber-blue);
+  --sidebar-border: rgba(255, 204, 0, 0.3);
+  --sidebar-ring: var(--cyber-yellow);
+}
+
+/* Add Tailwind utility classes for success color since custom colors might not be properly configured */
+.bg-success {
+  background-color: #00ccff !important;
+}
+
+.text-success {
+  color: #00ccff !important;
+}
+
+.bg-success\/20 {
+  background-color: rgba(0, 204, 255, 0.2) !important;
+}
+
+.border-success {
+  border-color: #00ccff !important;
+}
+
+.hover\:bg-success\/90:hover {
+  background-color: rgba(0, 204, 255, 0.9) !important;
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    border-color: var(--border);
+    outline-color: color-mix(in srgb, var(--ring) 50%, transparent);
   }
   body {
-    @apply bg-background text-foreground;
+    background-color: var(--background);
+    color: var(--foreground);
   }
   /* https://tailwindcss.com/docs/upgrade-guide#buttons-use-the-default-cursor */
   button:not(:disabled),

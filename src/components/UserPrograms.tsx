@@ -1,6 +1,12 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import {
   ChevronRight,
   Dumbbell,
@@ -23,8 +29,16 @@ const UserPrograms = () => {
           {/* HEADER BAR */}
           <div className="flex items-center justify-between px-5 py-3 border-b border-border bg-background/70">
             <div className="flex items-center gap-2">
-              <div className="w-2.5 h-2.5 rounded-full bg-primary"></div>
-              <span className="text-sm text-primary font-medium">Program Gallery</span>
+              <div
+                className="w-2.5 h-2.5 rounded-full"
+                style={{ backgroundColor: "#00ccff" }}
+              ></div>
+              <span
+                className="text-sm font-medium"
+                style={{ color: "#00ccff" }}
+              >
+                Program Gallery
+              </span>
             </div>
             <div className="text-sm text-muted-foreground">Featured Plans</div>
           </div>
@@ -37,7 +51,8 @@ const UserPrograms = () => {
             </h2>
 
             <p className="text-lg text-muted-foreground mx-auto mb-10">
-              Explore personalized fitness plans our AI assistant has created for other users
+              Explore personalized fitness plans our AI assistant has created
+              for other users
             </p>
 
             {/* STATS */}
@@ -76,8 +91,13 @@ const UserPrograms = () => {
               {/* Card header with user info */}
               <div className="flex items-center justify-between px-4 py-2 border-b border-border bg-background/70">
                 <div className="flex items-center gap-2">
-                  <div className="w-2 h-2 rounded-full bg-primary"></div>
-                  <span className="text-sm text-primary">USER.{program.id}</span>
+                  <div
+                    className="w-2 h-2 rounded-full"
+                    style={{ backgroundColor: "#00ccff" }}
+                  ></div>
+                  <span className="text-sm" style={{ color: "#00ccff" }}>
+                    USER.{program.id}
+                  </span>
                 </div>
                 <div className="text-sm text-muted-foreground">
                   {program.fitness_level.toUpperCase()}
@@ -142,7 +162,9 @@ const UserPrograms = () => {
                     </div>
                     <div className="flex-1">
                       <div className="flex justify-between items-center">
-                        <h3 className="font-medium text-foreground">{program.diet_plan.title}</h3>
+                        <h3 className="font-medium text-foreground">
+                          {program.diet_plan.title}
+                        </h3>
                       </div>
                       <p className="text-sm text-muted-foreground mt-1">
                         System optimized nutrition
@@ -156,7 +178,9 @@ const UserPrograms = () => {
                     </div>
                     <div className="flex-1">
                       <div className="flex justify-between items-center">
-                        <h3 className="font-medium text-foreground">AI Safety Protocols</h3>
+                        <h3 className="font-medium text-foreground">
+                          AI Safety Protocols
+                        </h3>
                       </div>
                       <p className="text-sm text-muted-foreground mt-1">
                         Protection systems enabled

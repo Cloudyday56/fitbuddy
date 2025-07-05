@@ -1,16 +1,15 @@
-import React from 'react'
-import {UserResource} from "@clerk/types";
-import CornerElements from './CornerElements';
+import React from "react";
+import { UserResource } from "@clerk/types";
+import CornerElements from "./CornerElements";
 
-const ProfileHeader = ({user}: {user:UserResource}) => {
+const ProfileHeader = ({ user }: { user: UserResource }) => {
   if (!user) {
     return null;
   }
   return (
-    <div className='mb-10 relative backdrop-blur-sm border border-border p-6'>
+    <div className="mb-10 relative backdrop-blur-sm border border-border p-6">
       <CornerElements />
-      <div className='flex flex-col md:flex-row items-start md:items-center gap-6'>
-
+      <div className="flex flex-col md:flex-row items-start md:items-center gap-6">
         {/* User profile image or first letter of name */}
         <div className="relative">
           {user.imageUrl ? (
@@ -29,7 +28,10 @@ const ProfileHeader = ({user}: {user:UserResource}) => {
             </div>
           )}
           {/* online indicator */}
-          <div className="absolute bottom-0 right-0 w-4 h-4 rounded-full bg-green-500 border-2 border-background"></div>
+          <div
+            className="absolute bottom-0 right-0 w-4 h-4 rounded-full border-2 border-background"
+            style={{ backgroundColor: "#00ccff" }}
+          ></div>
         </div>
 
         {/* User details */}
@@ -39,8 +41,13 @@ const ProfileHeader = ({user}: {user:UserResource}) => {
               <span className="text-foreground">{user.fullName}</span>
             </h1>
             <div className="flex items-center bg-cyber-terminal-bg backdrop-blur-sm border border-border rounded px-3 py-1">
-              <div className="w-2 h-2 rounded-full bg-primary animate-pulse mr-2"></div>
-              <p className="text-xs font-mono text-primary">USER ACTIVE</p>
+              <div
+                className="w-2 h-2 rounded-full animate-pulse mr-2"
+                style={{ backgroundColor: "#00ccff" }}
+              ></div>
+              <p className="text-xs font-mono" style={{ color: "#00ccff" }}>
+                USER ACTIVE
+              </p>
             </div>
           </div>
           <div className="h-px w-full bg-gradient-to-r from-primary via-secondary to-primary opacity-50 my-2"></div>
@@ -48,10 +55,9 @@ const ProfileHeader = ({user}: {user:UserResource}) => {
             {user.primaryEmailAddress?.emailAddress}
           </p>
         </div>
-
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProfileHeader
+export default ProfileHeader;

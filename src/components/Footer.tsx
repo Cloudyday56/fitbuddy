@@ -1,7 +1,7 @@
 import { ZapIcon } from "lucide-react";
 import Link from "next/link";
 
-// todo: just UI, could add some pages for the footer links later
+// ? just UI, could add some pages for the footer links later
 
 const Footer = () => {
   return (
@@ -29,78 +29,38 @@ const Footer = () => {
           {/* Links - Absolutely centered */}
           <div className="absolute left-1/2 transform -translate-x-1/2 hidden md:grid grid-cols-3 gap-x-8 gap-y-2 text-sm">
             <Link
-              href="/about"
-              className="text-muted-foreground hover:text-primary transition-colors"
+              href="#"
+              className="text-muted-foreground hover:text-primary transition-colors text-center"
             >
               About
             </Link>
             <Link
-              href="/terms"
-              className="text-muted-foreground hover:text-primary transition-colors"
+              href="#"
+              className="text-muted-foreground hover:text-primary transition-colors text-center"
             >
               Terms
             </Link>
             <Link
-              href="/privacy"
-              className="text-muted-foreground hover:text-primary transition-colors"
+              href="#"
+              className="text-muted-foreground hover:text-primary transition-colors text-center"
             >
               Privacy
             </Link>
             <Link
-              href="/contact"
-              className="text-muted-foreground hover:text-primary transition-colors"
+              href="#"
+              className="text-muted-foreground hover:text-primary transition-colors text-center"
             >
               Contact
             </Link>
             <Link
-              href="/blog"
-              className="text-muted-foreground hover:text-primary transition-colors"
+              href="#"
+              className="text-muted-foreground hover:text-primary transition-colors text-center"
             >
               Blog
             </Link>
             <Link
-              href="/help"
-              className="text-muted-foreground hover:text-primary transition-colors"
-            >
-              Help
-            </Link>
-          </div>
-
-          {/* Mobile Links - Below other content */}
-          <div className="grid grid-cols-2 gap-x-8 gap-y-2 text-sm md:hidden">
-            <Link
-              href="/about"
-              className="text-muted-foreground hover:text-primary transition-colors"
-            >
-              About
-            </Link>
-            <Link
-              href="/terms"
-              className="text-muted-foreground hover:text-primary transition-colors"
-            >
-              Terms
-            </Link>
-            <Link
-              href="/privacy"
-              className="text-muted-foreground hover:text-primary transition-colors"
-            >
-              Privacy
-            </Link>
-            <Link
-              href="/contact"
-              className="text-muted-foreground hover:text-primary transition-colors"
-            >
-              Contact
-            </Link>
-            <Link
-              href="/blog"
-              className="text-muted-foreground hover:text-primary transition-colors"
-            >
-              Blog
-            </Link>
-            <Link
-              href="/help"
-              className="text-muted-foreground hover:text-primary transition-colors"
+              href="#"
+              className="text-muted-foreground hover:text-primary transition-colors text-center"
             >
               Help
             </Link>
@@ -108,7 +68,10 @@ const Footer = () => {
 
           {/* Status */}
           <div className="flex items-center gap-2 px-3 py-2 border border-border rounded-md bg-background/50">
-            <div className="w-2 h-2 rounded-full bg-green-500"></div>
+            <div
+              className="w-2 h-2 rounded-full"
+              style={{ backgroundColor: "#00ccff" }}
+            ></div>
             <span className="text-xs font-mono">SYSTEM OPERATIONAL</span>
           </div>
         </div>
