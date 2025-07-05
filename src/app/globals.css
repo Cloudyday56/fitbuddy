@@ -48,23 +48,28 @@
   /* Base Variables */
   --radius: 0.625rem;
 
-  /* Yellow-Orange Theme Colors */
+  /* Brown Theme Colors */
   --cyber-black: #000000;
-  --cyber-dark: #2e1a0a;
+  --cyber-dark: #1c1410; /* Darker brown for main background */
   --cyber-yellow-bright: #ffcc00;
   --cyber-yellow: #ff9900;
   --cyber-yellow-dark: #cc6600;
   --cyber-yellow-glow: #ffaa33;
   --cyber-accent: #ff6600;
 
+  /* Header/Footer specific colors */
+  --header-bg: #2a1e18; /* Slightly brighter brown for header */
+  --footer-bg: #2a1e18; /* Slightly brighter brown for footer */
+  --home-bg: #150f0c; /* Darker brown for homepage */
+
   /* Background */
   --background: var(--cyber-dark);
   --foreground: #f2f2f2;
 
   /* Card and popover elements */
-  --card: #3d2812;
+  --card: #241a14;
   --card-foreground: #f2f2f2;
-  --popover: #3d2812;
+  --popover: #241a14;
   --popover-foreground: #f2f2f2;
 
   /* Primary - Main yellow */
@@ -107,12 +112,12 @@
   --sidebar-border: rgba(255, 204, 0, 0.3);
   --sidebar-ring: var(--cyber-yellow);
 
-  /* Custom Yellow UI Variables */
+  /* Custom Brown UI Variables */
   --cyber-grid-color: rgba(255, 204, 0, 0.1);
   --cyber-glow-primary: rgba(255, 204, 0, 0.3);
   --cyber-glow-strong: rgba(255, 204, 0, 0.6);
   --cyber-line-color: rgba(255, 204, 0, 0.4);
-  --cyber-terminal-bg: rgba(46, 26, 10, 0.9);
+  --cyber-terminal-bg: rgba(28, 20, 16, 0.9);
   --cyber-text-bright: #ffffff;
   --cyber-text-muted: rgba(255, 238, 187, 0.8);
   --cyber-text-dim: rgba(255, 238, 187, 0.6);
@@ -124,9 +129,9 @@
   --foreground: #f2f2f2;
 
   /* Card and popover elements */
-  --card: #3d2812;
+  --card: #241a14;
   --card-foreground: #f2f2f2;
-  --popover: #3d2812;
+  --popover: #241a14;
   --popover-foreground: #f2f2f2;
 
   /* Primary - Main yellow */
