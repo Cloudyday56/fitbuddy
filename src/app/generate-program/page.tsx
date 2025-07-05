@@ -19,6 +19,42 @@ const GenerateProgramPage = () => {
 
   const messageContainerRef = useRef<HTMLDivElement>(null); //to scroll the msgs
 
+
+  // SOLUTION to get rid of "Meeting has ended" error
+  useEffect(() => {
+    const originalError = console.error;
+    // override console.error to ignore "Meeting has ended" errors
+    console.error = function (msg, ...args) {
+      // check for "Meeting has ended" error
+      if (
+        msg &&
+        (msg.includes("Meeting has ended") ||
+          (args[0] && args[0].toString().includes("Meeting has ended")))
+      ) {
+        console.log("Ignoring known error: Meeting has ended");
+        return; // don't pass to original handler
+      }
+
+      // Check for empty VAPI error object
+      if (
+        msg && msg.includes("Error in VAPI: {}") ||
+        (args[0] && args[0].toString() === "{}")
+      ) {
+        console.log("Ignoring empty VAPI error");
+        return; // don't pass to original handler
+      }
+
+      // pass all other errors to the original handler
+      return originalError.call(console, msg, ...args);
+    };
+
+    // restore original handler on unmount
+    return () => {
+      console.error = originalError;
+    };
+  }, []);
+
+
   //scroll to the bottom of the message container
   useEffect(() => {
     if (messageContainerRef.current) {

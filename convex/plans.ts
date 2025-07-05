@@ -1,8 +1,9 @@
 //create a mutation to save the workout plan to the database
 
-import { mutation } from "./_generated/server";
+import { mutation, query } from "./_generated/server";
 import { v } from "convex/values";
 
+// Define the schema for the workout plan
 export const createPlan = mutation ({
   args: {
     userId: v.string(),
@@ -50,5 +51,18 @@ export const createPlan = mutation ({
     const planId = await ctx.db.insert("plans", args);
 
     return planId;
+  }
+})
+
+//create a query to get all plans of the user
+export const getUserPlans = query({
+  args: {userId: v.string()},
+  handler: async (ctx, args) => {
+    const plans = await ctx.db.query("plans")
+      .withIndex("by_user_id", q => q.eq("userId", args.userId))
+      .order("desc")
+      .collect();
+
+    return plans;
   }
 })
