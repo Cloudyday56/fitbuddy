@@ -1,6 +1,6 @@
 # FitBuddy
 
-Your AI-powered fitness companion that helps you create personalized workout programs and track your fitness journey.
+Your AI-powered fitness companion that helps you create personalized workout programs and track your fitness journey. You will be provided with a professional workout plan as well as a thoughtful diet plan.
 
 ## Features
 
