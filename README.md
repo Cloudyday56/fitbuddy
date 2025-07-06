@@ -16,6 +16,9 @@ Your AI-powered fitness companion that helps you create personalized workout pro
 - **Styling**: Tailwind CSS v4 with custom cyberpunk theme
 - **TypeScript**: Full type safety
 
+## Live Demo
+[Click to view the deployed website](https://fitbuddy-three.vercel.app)
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
