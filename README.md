@@ -4,21 +4,25 @@ Your AI-powered fitness companion that helps you create personalized workout pro
 
 ## Features
 
-- 🤖 AI-powered workout program generation
+- 🤖 Live call with AI voice agent
 - 👤 User authentication with Clerk
-- 📱 Modern, responsive design with cyberpunk aesthetics
+- 📱 Modern, responsive UI
 - 🎯 Personalized fitness recommendations
 
 ## Tech Stack
 
-- **Framework**: Next.js 15 with React 19
+- **Framework**: Next.js, React
 - **Authentication**: Clerk
-- **Styling**: Tailwind CSS v4 with custom cyberpunk theme
-- **TypeScript**: Full type safety
+- **Language**: Typescript
+- **Styling**: Tailwind CSS
+- **Voice AI**: Vapi.ai
+- **Generative AI**: Gemini
+- **Database**: Convex
 
 ## Live Demo
-[Click to view the deployed website](https://fitbuddy-three.vercel.app)
+[Try out the deployed website](https://fitbuddy-three.vercel.app)
 
-## License
+## License & Acknowledgment
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.  
+**Acknowledgmets**: This project is made based on [Codesistency](https://www.youtube.com/@codesistency)'s [tutorial](https://youtu.be/BCufdom7xgY?si=m80nME5sti_ksW5A)
