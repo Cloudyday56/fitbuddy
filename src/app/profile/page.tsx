@@ -178,7 +178,7 @@ const ProfilePage = () => {
                                   ) => (
                                     <div
                                       key={routineIndex}
-                                      className="border border-border rounded p-3 bg-background/50"
+                                      className="border border-border rounded p-3 bg-[var(--card)]/90"
                                     >
                                       <div className="flex justify-between items-start mb-2">
                                         <h4 className="font-semibold text-foreground">

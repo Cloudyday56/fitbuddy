@@ -5,7 +5,7 @@ import Link from "next/link";
 
 const Footer = () => {
   return (
-    <footer className="border-t border-border bg-background/80 backdrop-blur-sm">
+    <footer className="border-t border-border bg-[var(--footer-bg)] backdrop-blur-sm">
       {/* Top border glow */}
       <div className="h-px w-full bg-gradient-to-r from-transparent via-primary/30 to-transparent"></div>
 
@@ -67,7 +67,7 @@ const Footer = () => {
           </div>
 
           {/* Status */}
-          <div className="flex items-center gap-2 px-3 py-2 border border-border rounded-md bg-background/50">
+          <div className="flex items-center gap-2 px-3 py-2 border border-border rounded-md bg-[var(--footer-bg)]/70">
             <div
               className="w-2 h-2 rounded-full"
               style={{ backgroundColor: "#00ccff" }}
