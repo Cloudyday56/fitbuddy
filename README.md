@@ -14,9 +14,9 @@ Your AI-powered fitness companion that helps you create personalized workout pro
 - **Framework**: Next.js, React
 - **Authentication**: Clerk
 - **Language**: Typescript
-- **Styling**: Tailwind CSS
+- **Styling**: Tailwind CSS, Shadcn
 - **Voice AI**: Vapi.ai
-- **Generative AI**: Gemini
+- **Generative AI**: Gemini 2.0
 - **Database**: Convex
 
 ## Live Demo
