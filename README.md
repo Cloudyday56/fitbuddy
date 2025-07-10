@@ -1,6 +1,6 @@
 # FitBuddy
 
-Your AI-powered fitness companion that helps you create personalized workout programs and track your fitness journey. You will be provided with a professional workout plan as well as a thoughtful diet plan.
+An AI-powered fitness companion that helps you create personalized workout programs and track your fitness journey. You will be provided with a professional workout plan as well as a thoughtful diet plan.
 
 ## Features
 
@@ -11,10 +11,10 @@ Your AI-powered fitness companion that helps you create personalized workout pro
 
 ## Tech Stack
 
-- **Framework**: Next.js, React
+- **Framework**: [![My Skills](https://skillicons.dev/icons?i=nextjs,react&theme=dark)](https://skillicons.dev)
 - **Authentication**: Clerk
-- **Language**: Typescript
-- **Styling**: Tailwind CSS, Shadcn
+- **Language**: [![My Skills](https://skillicons.dev/icons?i=ts&theme=dark)](https://skillicons.dev)
+- **Styling**: shadcn, [![My Skills](https://skillicons.dev/icons?i=tailwind&theme=dark)](https://skillicons.dev)
 - **Voice AI**: Vapi.ai
 - **Generative AI**: Gemini 2.0
 - **Database**: Convex
