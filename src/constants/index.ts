@@ -24,7 +24,7 @@ export const USER_PROGRAMS = [
         "This program focuses on building a consistent exercise habit with joint-friendly movements that protect your lower back. The mix of cardio and strength training supports weight loss while preserving muscle mass.",
     },
     diet_plan: {
-      title: "Balanced Nutrition Plan (Lactose-Free)",
+      title: "Balanced Nutrition Plan",
       daily_calories: "1,600 calories",
       macros: { protein: "30%", carbs: "40%", fats: "30%" },
       meal_examples: [
@@ -59,11 +59,11 @@ export const USER_PROGRAMS = [
     age: 28,
     workout_days: 5,
     injuries: "None",
-    fitness_level: "Intermediate",
+    fitness_level: "Advanced",
     equipment_access: "Full gym",
     dietary_restrictions: "None",
     workout_plan: {
-      title: "Hypertrophy-Focused Muscle Building",
+      title: "Muscle Building",
       weekly_schedule: [
         { day: "Monday", focus: "Chest & Triceps", duration: "45 min" },
         { day: "Tuesday", focus: "Back & Biceps", duration: "45 min" },
