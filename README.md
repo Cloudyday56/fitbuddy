@@ -24,7 +24,7 @@ You will be provided with a professional workout plan as well as a thoughtful di
 
 
 ## Live Demo
-[Try out the deployed website!](https://fitbuddy-three.vercel.app)
+[Try out the deployed website!](https://fitbuddy-ai.vercel.app)
 
 ## License & Acknowledgment
 
