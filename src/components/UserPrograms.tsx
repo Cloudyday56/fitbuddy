@@ -1,14 +1,9 @@
+"use client";
 import Link from "next/link";
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
-  ChevronRight,
   Dumbbell,
   Sparkles,
   Users,
@@ -18,9 +13,51 @@ import {
 } from "lucide-react";
 import { USER_PROGRAMS } from "@/constants";
 
-// todo: just UI, can modify the index.ts to change the hardcoded data
+// Collapsible description component
+const DescriptionCollapse = ({
+  description,
+  open,
+  setOpen,
+}: {
+  description: string;
+  open: boolean;
+  setOpen: (v: boolean) => void;
+}) => {
+  return (
+    <div className="mt-8 border-t border-border bg-card/90 overflow-hidden p-0 rounded-b-xl">
+      <button
+        className={`w-full px-6 py-3 text-sm font-semibold bg-primary text-primary-foreground text-left focus:outline-none hover:bg-primary/90 transition-colors ${open ? "rounded-t-none rounded-b-xl" : "rounded-b-xl"}`}
+        onClick={() => setOpen(!open)}
+        aria-expanded={open}
+      >
+        {open ? "Hide Details" : "Show Details"}
+      </button>
+      {open && (
+        <div className="px-6 py-6 text-sm text-muted-foreground animate-fadeIn bg-card/90 rounded-b-xl">
+          <span className="text-primary">&gt; </span>
+          {description}
+        </div>
+      )}
+    </div>
+  );
+};
+
+// todo: just UI
 
 const UserPrograms = () => {
+  // State for each card's collapse
+  const [openStates, setOpenStates] = useState(
+    Array(USER_PROGRAMS.length).fill(false)
+  );
+
+  const handleToggle = (idx: number) => {
+    setOpenStates((prev) => {
+      const copy = [...prev];
+      copy[idx] = !copy[idx];
+      return copy;
+    });
+  };
+
   return (
     <div className="w-full pb-24 pt-16 relative">
       <div className="container mx-auto max-w-6xl px-4">
@@ -83,7 +120,7 @@ const UserPrograms = () => {
 
         {/* Program cards */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {USER_PROGRAMS.map((program) => (
+          {USER_PROGRAMS.map((program, idx) => (
             <Card
               key={program.id}
               className="bg-card/90 backdrop-blur-sm border border-border hover:border-primary/50 transition-colors overflow-hidden"
@@ -104,7 +141,7 @@ const UserPrograms = () => {
                 </div>
               </div>
 
-              <CardHeader className="pt-6 px-5">
+              <CardHeader className="pt-8 px-8 bg-card/90 rounded-b-none">
                 <div className="flex items-center gap-4 mb-4">
                   <div className="h-16 w-16 rounded-full overflow-hidden border border-border">
                     <img
@@ -126,7 +163,7 @@ const UserPrograms = () => {
                 </div>
 
                 <div className="flex justify-between items-center gap-4">
-                  <div className="px-3 py-1 bg-primary/10 rounded border border-primary/20 text-sm text-primary flex items-center gap-2">
+                  <div className="px-3 py-1 bg-primary/20 rounded border border-primary/30 text-sm text-primary flex items-center gap-2">
                     <Sparkles className="h-4 w-4" />
                     {program.fitness_goal}
                   </div>
@@ -137,11 +174,11 @@ const UserPrograms = () => {
                 </div>
               </CardHeader>
 
-              <CardContent className="px-5">
+              <CardContent className="px-8 py-6 bg-primary/5 rounded-t-none">
                 {/* Program details */}
                 <div className="space-y-5 pt-2">
                   <div className="flex items-start gap-3">
-                    <div className="p-2 rounded-md bg-primary/10 text-primary mt-0.5">
+                    <div className="p-2 rounded-md bg-primary/20 text-primary mt-0.5">
                       <Dumbbell className="h-5 w-5" />
                     </div>
                     <div className="flex-1">
@@ -157,7 +194,7 @@ const UserPrograms = () => {
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <div className="p-2 rounded-md bg-secondary/10 text-secondary mt-0.5">
+                    <div className="p-2 rounded-md bg-secondary/20 text-secondary mt-0.5">
                       <AppleIcon className="h-5 w-5" />
                     </div>
                     <div className="flex-1">
@@ -173,7 +210,7 @@ const UserPrograms = () => {
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <div className="p-2 rounded-md bg-primary/10 text-primary mt-0.5">
+                    <div className="p-2 rounded-md bg-primary/20 text-primary mt-0.5">
                       <ShieldIcon className="h-5 w-5" />
                     </div>
                     <div className="flex-1">
@@ -189,28 +226,18 @@ const UserPrograms = () => {
                   </div>
                 </div>
 
-                {/* Program description */}
-                <div className="mt-5 pt-5 border-t border-border">
-                  <div className="text-sm text-muted-foreground">
-                    <span className="text-primary">&gt; </span>
-                    {program.workout_plan.description.substring(0, 120)}...
-                  </div>
-                </div>
+                {/* Program description - collapsible */}
+                <DescriptionCollapse
+                  description={program.workout_plan.description}
+                  open={openStates[idx]}
+                  setOpen={() => handleToggle(idx)}
+                />
               </CardContent>
-
-              <CardFooter className="px-5 py-4 border-t border-border">
-                <Link href={`/programs/${program.id}`} className="w-full">
-                  <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
-                    View Program Details
-                    <ChevronRight className="ml-2 h-4 w-4" />
-                  </Button>
-                </Link>
-              </CardFooter>
             </Card>
           ))}
         </div>
 
-        {/* CTA section */}
+        {/* Call to Action section */}
         <div className="mt-16 text-center">
           <Link href="/generate-program">
             <Button
@@ -222,7 +249,7 @@ const UserPrograms = () => {
             </Button>
           </Link>
           <p className="text-muted-foreground mt-4">
-            Join 500+ users with AI-customized fitness programs
+            Join them and shape your body with your own fitness programs
           </p>
         </div>
       </div>

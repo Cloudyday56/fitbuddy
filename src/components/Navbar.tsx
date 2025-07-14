@@ -49,13 +49,7 @@ const Navbar = () => {
                 <span>Profile</span>
               </Link>
               {/* buttons */}
-              <Button
-                asChild
-                variant="outline"
-                className="ml-2 border-primary/50 text-primary hover:text-white hover:bg-primary/10"
-              >
-                <Link href="/generate-program">Get Started</Link>
-              </Button>
+
               <UserButton /> {/* user profile button */}
             </>
           ) : (

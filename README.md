@@ -1,8 +1,9 @@
 # FitBuddy
 <img width="300" height="350" alt="Screenshot 2025-07-10 at 20 33 52" src="https://github.com/user-attachments/assets/1e894bc4-e952-49bd-90bc-ba0047c60e37" />
 
-An AI-powered fitness companion that helps you create personalized workout programs and track your fitness journey.  
+Your AI-powered fitness companion that helps you create personalized workout programs and track your fitness journey.
 You will be provided with a professional workout plan as well as a thoughtful diet plan.
+**Hosted at:** [https://fitbuddy-three.vercel.app](https://fitbuddy-three.vercel.app)
 
 ## Features
 

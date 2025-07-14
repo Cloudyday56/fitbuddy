@@ -26,53 +26,26 @@ const Footer = () => {
             </p>
           </div>
 
-          {/* Links - Absolutely centered */}
-          <div className="absolute left-1/2 transform -translate-x-1/2 hidden md:grid grid-cols-3 gap-x-8 gap-y-2 text-sm">
+          {/* Status and GitHub Link */}
+          <div className="flex items-center gap-4 px-3 py-2 ">
             <Link
-              href="#"
-              className="text-muted-foreground hover:text-primary transition-colors text-center"
+              href="https://github.com/Cloudyday56/fitbuddy"
+              target="_blank"
+              rel="noopener noreferrer"
             >
-              About
+              <img
+                src="/github-mark-white.svg"
+                alt="GitHub Repo"
+                className="w-8 h-8"
+              />
             </Link>
-            <Link
-              href="#"
-              className="text-muted-foreground hover:text-primary transition-colors text-center"
-            >
-              Terms
-            </Link>
-            <Link
-              href="#"
-              className="text-muted-foreground hover:text-primary transition-colors text-center"
-            >
-              Privacy
-            </Link>
-            <Link
-              href="#"
-              className="text-muted-foreground hover:text-primary transition-colors text-center"
-            >
-              Contact
-            </Link>
-            <Link
-              href="#"
-              className="text-muted-foreground hover:text-primary transition-colors text-center"
-            >
-              Blog
-            </Link>
-            <Link
-              href="#"
-              className="text-muted-foreground hover:text-primary transition-colors text-center"
-            >
-              Help
-            </Link>
-          </div>
-
-          {/* Status */}
-          <div className="flex items-center gap-2 px-3 py-2 border border-border rounded-md bg-[var(--footer-bg)]/70">
-            <div
-              className="w-2 h-2 rounded-full"
-              style={{ backgroundColor: "#00ccff" }}
-            ></div>
-            <span className="text-xs font-mono">SYSTEM OPERATIONAL</span>
+            <div className="flex items-center gap-2 py-2 px-3 border border-border rounded-md bg-[var(--footer-bg)]/70">
+              <div
+                className="w-2 h-2 rounded-full"
+                style={{ backgroundColor: "#00ccff" }}
+              ></div>
+              <span className="text-xs font-mono">SYSTEM OPERATIONAL</span>
+            </div>
           </div>
         </div>
       </div>
